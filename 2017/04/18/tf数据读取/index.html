@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>TFRecord Demo | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tf">
+    <meta name="description" content="tensorflow的数据读取 tensorflow在读取像imagenet这种大量图像数据，不能一次性load进内存时有几个坑，Mark一记，以助后来者。关于多GPU和分布式，本文只讨论数据并行方式，即每个GPU上面运行一个网络，称为tower。 * 数据格式TFRecord * 数据读取第一层封装——Queue，Coordinator，QueueRunner * 常用封装——tf.train.">
+<meta name="keywords" content="tf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TFRecord Demo">
+<meta property="og:url" content="http://xls1994.github.io/2017/04/18/tf数据读取/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="tensorflow的数据读取 tensorflow在读取像imagenet这种大量图像数据，不能一次性load进内存时有几个坑，Mark一记，以助后来者。关于多GPU和分布式，本文只讨论数据并行方式，即每个GPU上面运行一个网络，称为tower。 * 数据格式TFRecord * 数据读取第一层封装——Queue，Coordinator，QueueRunner * 常用封装——tf.train.">
+<meta property="og:updated_time" content="2017-04-18T14:34:08.668Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TFRecord Demo">
+<meta name="twitter:description" content="tensorflow的数据读取 tensorflow在读取像imagenet这种大量图像数据，不能一次性load进内存时有几个坑，Mark一记，以助后来者。关于多GPU和分布式，本文只讨论数据并行方式，即每个GPU上面运行一个网络，称为tower。 * 数据格式TFRecord * 数据读取第一层封装——Queue，Coordinator，QueueRunner * 常用封装——tf.train.">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@1.6.1/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/img.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">ICE</h5>
+          <a href="mailto:1060687688@qq.com" title="1060687688@qq.com" class="mail">1060687688@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Xls1994" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">TFRecord Demo</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">TFRecord Demo</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-18T14:30:34.079Z" itemprop="datePublished" class="page-time">
+  2017-04-18
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tensorflow/">tensorflow</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-tf数据读取"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">TFRecord Demo</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-04-18 22:30:34" datetime="2017-04-18T14:30:34.079Z"  itemprop="datePublished">2017-04-18</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tensorflow/">tensorflow</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>tensorflow的数据读取</p>
+<pre><code>tensorflow在读取像imagenet这种大量图像数据，不能一次性load进内存时有几个坑，Mark一记，以助后来者。关于多GPU和分布式，本文只讨论数据并行方式，即每个GPU上面运行一个网络，称为tower。
+* 数据格式TFRecord
+* 数据读取第一层封装——Queue，Coordinator，QueueRunner
+* 常用封装——tf.train.xxx_input_producer,tf.reader,tf.train.batch
+</code></pre><ol>
+<li>创建TFRecord</li>
+</ol>
+<p>TFRecord本身是一个集合，每条记录是一个tf.train.Example（一种protocol buffer），包含有多个字段（称为feature），TFRecord提供的格式一般包含几个重要的feature，比如代表大小的image/height、image/width，代表类别的image/class/label、image/class/text，代表数据的image/encoded等等。</p>
+<p>创建TFRecord文件就是按照feature名把相应字段填充，接口为tf.python_io.TFRecordWriter和tf.train.Example，典型代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">writer = tf.python_io.TFRecordWriter(output_file)</div><div class="line">example = tf.train.Example(features=tf.train.Features(feature=&#123;</div><div class="line">      <span class="string">'image/height'</span>: _int64_feature(height),</div><div class="line">      <span class="string">'image/width'</span>: _int64_feature(width),</div><div class="line">      <span class="string">'image/colorspace'</span>: _bytes_feature(colorspace),</div><div class="line">      <span class="string">'image/channels'</span>: _int64_feature(channels),</div><div class="line">      <span class="string">'image/class/label'</span>: _int64_feature(label),</div><div class="line">      <span class="string">'image/class/text'</span>: _bytes_feature(text),</div><div class="line">      <span class="string">'image/format'</span>: _bytes_feature(image_format),</div><div class="line">      <span class="string">'image/filename'</span>: _bytes_feature(os.path.basename(filename)),</div><div class="line">      <span class="string">'image/encoded'</span>: _bytes_feature(image_buffer)&#125;))</div><div class="line">writer.write(example.SerializeToString())</div></pre></td></tr></table></figure></p>
+<p>读取则是读出相应字段，接口为tf.TFRecordReader和tf.parse_single_example。他们本身都是op，需要在session中执行，无法过程式执行。对于jpg、png等压缩图片格式，读出image/encoded相应数据后需要用tf.image.decode_jpeg,tf.image.decode_png等op来进行解码，解析TFRecord的典型代码如下（tf.TFRecordReader的代码见下节）：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"> feature_map = &#123;</div><div class="line">      <span class="string">'image/encoded'</span>: tf.FixedLenFeature([], dtype=tf.string,</div><div class="line">                                          default_value=<span class="string">''</span>),</div><div class="line">      <span class="string">'image/class/label'</span>: tf.FixedLenFeature([<span class="number">1</span>], dtype=tf.int64,</div><div class="line">                                              default_value=<span class="number">-1</span>),</div><div class="line">      <span class="string">'image/class/text'</span>: tf.FixedLenFeature([], dtype=tf.string,</div><div class="line">                                             default_value=<span class="string">''</span>)&#125;</div><div class="line">features = tf.parse_single_example(example_serialized, feature_map)</div><div class="line">label = tf.cast(features[<span class="string">'image/class/label'</span>], dtype=tf.int32)</div><div class="line">image = tf.image.decode_jpeg(features[<span class="string">'image/encoded'</span>])</div></pre></td></tr></table></figure></p>
+<p> 需要特别注意的是，TF中一般一个TFRecord文件会写入多个example，这样可以把原始文件个数减少很多，从而减轻filename Queue（见下节）的负担。读取的方法见下节。</p>
+<p>tensorflow的model zoo中的inception模型示例了imagenet的读取方法。</p>
+<p>建立TFRecord文件集只需要略微修改build_image_data或者build_imagenet_data 就好了，他们的主体部分实现了多线程读取图像、转换和输出，前提是图像以dir/label/xxx.jpg 的命名规则存放。关键代码就是每幅图像创建tf.train.Example以及多次调用tf.python_io.TFRecordWriter的write方法写入磁盘。<br>读取的代码在image_processing中，imagenet_train和imagnet_distributed_train都是调用了这个文件</p>
+<ol>
+<li>单tower读取流程</li>
+</ol>
+<p>如前所述，典型情况下，在目录dir下有若干TFRecord文件，每个文件有若干记录，每个记录是一幅图像，可以是编码后的也可以是raw data。<br>流程的起点，tf读取dir下的所有TFRecord文件名并放在内存，整个系统有三个队列缓冲:FilnameQueue,ExampleQueue,BatchQueue。<br>那么在训练和测试模型的时候，数据读取的流程就是：</p>
+<ul>
+<li>把文件名shuffle并放入FilenameQueue</li>
+<li>多线程，每个线程选择一个文件（从FilenameQueue中dequeue），并从该文件中读取一条记录放到ExampleQueue</li>
+<li>选择一条记录（从ExampleQueue中dequeue），把若干记录合并成一个batch放到BatchQueue中</li>
+<li>从BatchQueue中取数据给模型训练或测试</li>
+</ul>
+<p>前两个操作如下图所示，注意到在用多个reader的时候一般是多线程的，每个线程有一个reader读取图像，还有一个enqueue的op把处理后的图像放进example enqueue</p>
+<p>多线程读取</p>
+<p>tf.train.XXXbatchXXX()封装了从一个op–examplequeue.dequeue到读出batchsize个example的过程。在这个调用中，tf创建一个新的BatchQueue，并创建多个线程用来读取ExampleQueue并填到BatchQueue中，典型代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">filename_queue = tf.train.string_input_producer(data_files,shuffle=<span class="keyword">True</span>,capacity=<span class="number">16</span>)</div><div class="line">examples_queue = tf.RandomShuffleQueue(...)</div><div class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(num_readers):</div><div class="line">    reader = tf.TFRecordReader()</div><div class="line">    _, value = reader.read(filename_queue)</div><div class="line">    enqueue_ops.append(examples_queue.enqueue([value]))</div><div class="line">runner = tf.train.queue_runner.QueueRunner(examples_queue, enqueue_ops)</div><div class="line">tf.train.queue_runner.add_queue_runner(runner)</div><div class="line">example_serialized = examples_queue.dequeue()   </div><div class="line"><span class="keyword">for</span> thread_id <span class="keyword">in</span> range(num_preprocess_threads):</div><div class="line">    image_buffer, label_index, ... = parse_example_proto(example_serialized)</div><div class="line">    image = image_preprocessing(image_buffer, ...)</div><div class="line">    images_and_labels.append([image, label_index])</div><div class="line">images, label_index_batch = tf.train.batch_join(images_and_labels,...)</div></pre></td></tr></table></figure></p>
+<p>此处有诸多值得推敲的细节:</p>
+<ul>
+<li>reader.read(filename_queue)方法在读取文件的时候每次读出一个记录，并在一个文件的所有记录都被读出过之后，filename_queue才会dequeue</li>
+<li>创建num_readers个reader和examples_queue.enqueue()，并放进QueueRunner中之后，一旦执行tf.train.start_queue_runners()，QueueRunner将会创建num_readers个线程独立执行read和enqueue</li>
+<li>images_and_labels是一个长度为num_preprocess_threads的list，而tf.train.batch_join会在执行时，为每个元素创建一个线程来获取其数据，他们会共用examples_queue.dequeue() ，而独立执行解析和image_preprocessing。</li>
+<li>把example_serialized = examples_queue.dequeue()放在下面的循环中不会更好，因为这样每个线程虽然可以独立dequeue，但是ExampleQueue本身会在dequeue的时候加锁以保证数据一致性，所以效率并不能提升。</li>
+<li>images并不是真正的数据，只是定义了计算流图，而要想拿到真正的数据需要在session中调用eval方法：<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">img = tf.placeholder(...)</div><div class="line">loss = xxmodel.loss(img,...)</div><div class="line"><span class="keyword">with</span> tf.Session():</div><div class="line">    tf.initialize_all_variables().run()</div><div class="line">    tf.train.start_queue_runners()</div><div class="line">    imagedata = images.eval()</div><div class="line">    <span class="keyword">print</span> loss.eval(feed_dict=&#123;img:imagedata,...&#125;)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>或者直接输入到模型中训练或测试：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">loss = xxmodel.loss(images)</div><div class="line"><span class="keyword">with</span> tf.Session():</div><div class="line">    tf.initialize_all_variables().run()</div><div class="line">    tf.train.start_queue_runners()</div><div class="line">    <span class="keyword">print</span> loss.eval()</div></pre></td></tr></table></figure></p>
+<p>以上代码是整个数据读取pipeline的核心，计算流图的时候回溯执行，有以下几个步骤:</p>
+<ul>
+<li>tf.train.start_queue_runners()被执行之后，每个线程都要监测自己enqueue的queue是不是满的，不满的话就会执行enqueue</li>
+<li>计算loss的时候需要往前回溯整个网络，一直到网络的输入，就是从BatchQueue获取的那个Tensor，获取它意味着BatchQueue执行dequeue，从而使得BatchQueue不满</li>
+<li>负责从ExampleQueue获取、加工数据的线程会把EampleQueue中的数据读出，填到BatchQueue，使得ExampleQueue不满</li>
+<li>负责填充ExampleQueue的线程会调用TFRecordReader.read()方法来获得硬盘文件的数据。如果该文件中的记录已经全都被读出过了，则使FilenameQueue出队，不满，否则不变</li>
+<li>如果FilenameQueue不满的情况发生，则自动填充文件名。</li>
+</ul>
+<p>注意就读取任务而言，单机上单GPU（单tower）、多GPU（tower）是有区别的，而是否运行于多机集群环境，事实上并不重要，关键还是每台机器上面是多GPU还是单GPU。因为集群中ps并不读取图像数据，而每个worker独立读取各自的文件，并不相互影响。多tower的读取留待下篇，与tensorflow的分布式并行一起讨论。</p>
+<ol>
+<li>低层封装</li>
+</ol>
+<p>以上介绍了高层API接口，本节其底层原理及接口，下节在此基础上重新看待上述高层接口。本节介绍的接口主要用于理解，以笔者的经验，实际使用中高层接口已经足够了。本节主要解释：</p>
+<pre><code>tf.train.queue_runner.QueueRunner的多线程原理
+tf.train.batch_join的多线程原理
+tf.TFRecordReader读取细节
+</code></pre><p>QueueRunner</p>
+<p>典型的多线程FIFO缓冲，<br>Coordinator的核心实体是一个Python标准库里的threading Event Object，然后封装了一些操作方法来同步各个线程一起stop。所以要在创建线程的时候把Coordinator传进去用，这样的用法需要显式开辟和管理线程，会比较麻烦，而这些线程主要用来进行enqueue，所以tf提供了QueueRunner来管理这些用于enqueue的线程。</p>
+<p>QueueRunner在初始化时需要提供queue和一个包含enqueue操作的list，然后调用create_thread，提供Coordinator来创建和同步线程。也可以不显式调用create_thread，可以使用tf.train.start_queue_runner()一次性启动所有runner，该函数内部会自己维护一个coordinatior，从而简化了编程。</p>
+<p>QueueRunner的线程就是在loop执行enqueue，而enqueue时如果queue已经满了就直接返回，而dequeue时候如果queue空了则抛出异常OutOfRange，见FIFOQueue的源代码。</p>
+<p>注意，QueueRunner的enqueue一般需要dequeue前一个queue，所以QueueRunner的enqueue依赖于前一个queue的dequeue操作，即QueueRunner的每个线程不仅对本queue执行了enqueue一般也会对前一个queue执行dequeue</p>
+<p>整个过程就是，初始化的时候在主线程中建立各个queue，然后通过Runner和Coordinator建立相应的enqueue子线程。启动session后，子线程start，填满queue之后的loop实际上无操作，然后主线程执行train或者inference，反向遍历网络中的op，到达数据读取那个op，即对example batch queue的dequeue操作，就会产生连锁反应使得各个queue中的entry出队，一直在loop的子线程就会马上读取entry并enqueue进去。<br>batch_join()</p>
+<p>tf.train中的batch族函数有四个，调用他们时都会创建一个Queue和QueueRunner，就像上节所描述的那样，只是做了封装。</p>
+<p>tf.train.batch_join()会把tensors_list中的每个元素都开一个线程来单独获取数据，并把这些得到的数据按照batch_size大小组成新的张量放进Queue，然后再调用Queue的dequeue来返回。<br>reader.read()</p>
+<p>一个重要的问题是，shuffle读取batch的时候如何在一个epoch内不重复？一个epoch之后queue是不是就空了？</p>
+<p>第二个问题很好回答，因为调用tf.train.string_input_producer的时候会创建相应的QueueRunner来持续填充FilenameQueue。在一开始，producer会存储下文件名集合，它内部有epoch的概念：epoch的大小也就是集合元素数目，每次enqueue都是顺序从集合中取值，并且会计数，够一个epoch之后会把集合shffule，这样就既保证了一个epoch内的随机性，又保证了一个epoch之内所有样本全部遍历一遍且不重复。<br>代码导读</p>
+<p>在Coordinator的源码中可以看出，其主要接口join、request_stop、should_stop都是对自身成员变量_stop_event的操作。</p>
+<p>tf的queue系统是用C++实现的</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-04-18T14:34:08.668Z" itemprop="dateUpdated">2017-04-18 22:34:08</time>
+</span><br>
+
+
+        这里写留言或版权声明：<a href="/2017/04/18/tf数据读取/" target="_blank" rel="external">http://xls1994.github.io/2017/04/18/tf数据读取/</a>
+    </div>
+    <footer>
+        <a href="http://xls1994.github.io">
+            <img src="/img/img.jpg" alt="ICE">
+            ICE
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tf/">tf</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xls1994.github.io/2017/04/18/tf数据读取/&title=《TFRecord Demo》 — Hexo&pic=http://xls1994.github.io/img/img.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xls1994.github.io/2017/04/18/tf数据读取/&title=《TFRecord Demo》 — Hexo&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xls1994.github.io/2017/04/18/tf数据读取/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《TFRecord Demo》 — Hexo&url=http://xls1994.github.io/2017/04/18/tf数据读取/&via=http://xls1994.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xls1994.github.io/2017/04/18/tf数据读取/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/04/18/append/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Append vs Extend</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="tf数据读取" data-title="TFRecord Demo" data-url="http://xls1994.github.io/2017/04/18/tf数据读取/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'ysblog', theme: 'none'};
+lazyScripts.push('//unpkg.com/hexo-theme-material-indigo@1.6.1/js/embed.min.js');
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>ICE &copy; 2015 - 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xls1994.github.io/2017/04/18/tf数据读取/&title=《TFRecord Demo》 — Hexo&pic=http://xls1994.github.io/img/img.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xls1994.github.io/2017/04/18/tf数据读取/&title=《TFRecord Demo》 — Hexo&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xls1994.github.io/2017/04/18/tf数据读取/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《TFRecord Demo》 — Hexo&url=http://xls1994.github.io/2017/04/18/tf数据读取/&via=http://xls1994.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xls1994.github.io/2017/04/18/tf数据读取/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://xls1994.github.io/2017/04/18/tf数据读取/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@1.6.1/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@1.6.1/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
