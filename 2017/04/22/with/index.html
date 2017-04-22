@@ -13,24 +13,24 @@
     
     
     
-    <title>Append vs Extend | Star</title>
+    <title>python中使用with打开多个文件 | Star</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
     <meta name="keywords" content="py">
-    <meta name="description" content="What is the different between the list methods append() and extend()? append()append: appends object at end123x =[1,2,3]x.append([4,5])print (x) gives you: [1,2,3,[4,5]] extend()extend:extends list by">
+    <meta name="description" content="python中使用with打开多个文件使用with打开文件的好处不多说，这里记录一下如果要打开多个文件，该怎么书写简捷的代码。 同时打开三个文件，文件行数一样，程序实现每个文件依次读取一行，同时输出。 首先来一种比较容易想到的写法，如下一样嵌套：1234567with open(&apos;file1&apos;) as f1:    with open(&apos;file2&apos;) as f2:        with ope">
 <meta name="keywords" content="py">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Append vs Extend">
-<meta property="og:url" content="http://xls1994.github.io/2017/04/18/append/index.html">
+<meta property="og:title" content="python中使用with打开多个文件">
+<meta property="og:url" content="http://xls1994.github.io/2017/04/22/with/index.html">
 <meta property="og:site_name" content="Star">
-<meta property="og:description" content="What is the different between the list methods append() and extend()? append()append: appends object at end123x =[1,2,3]x.append([4,5])print (x) gives you: [1,2,3,[4,5]] extend()extend:extends list by">
-<meta property="og:updated_time" content="2017-04-18T14:31:44.654Z">
+<meta property="og:description" content="python中使用with打开多个文件使用with打开文件的好处不多说，这里记录一下如果要打开多个文件，该怎么书写简捷的代码。 同时打开三个文件，文件行数一样，程序实现每个文件依次读取一行，同时输出。 首先来一种比较容易想到的写法，如下一样嵌套：1234567with open(&apos;file1&apos;) as f1:    with open(&apos;file2&apos;) as f2:        with ope">
+<meta property="og:updated_time" content="2017-04-22T07:08:54.839Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Append vs Extend">
-<meta name="twitter:description" content="What is the different between the list methods append() and extend()? append()append: appends object at end123x =[1,2,3]x.append([4,5])print (x) gives you: [1,2,3,[4,5]] extend()extend:extends list by">
+<meta name="twitter:title" content="python中使用with打开多个文件">
+<meta name="twitter:description" content="python中使用with打开多个文件使用with打开文件的好处不多说，这里记录一下如果要打开多个文件，该怎么书写简捷的代码。 同时打开三个文件，文件行数一样，程序实现每个文件依次读取一行，同时输出。 首先来一种比较容易想到的写法，如下一样嵌套：1234567with open(&apos;file1&apos;) as f1:    with open(&apos;file2&apos;) as f2:        with ope">
     
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@1.6.1/css/style.css">
@@ -105,7 +105,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">Append vs Extend</div>
+        <div class="flex-col header-title ellipsis">python中使用with打开多个文件</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -127,11 +127,11 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">Append vs Extend</h1>
+        <h1 class="title">python中使用with打开多个文件</h1>
         <h5 class="subtitle">
             
-                <time datetime="2017-04-18T14:30:34.126Z" itemprop="datePublished" class="page-time">
-  2017-04-18
+                <time datetime="2017-04-22T02:15:25.411Z" itemprop="datePublished" class="page-time">
+  2017-04-22
 </time>
 
 
@@ -152,17 +152,17 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#append"><span class="post-toc-number">1.</span> <span class="post-toc-text">append()</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#extend"><span class="post-toc-number">2.</span> <span class="post-toc-text">extend()</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#python中使用with打开多个文件"><span class="post-toc-number">1.</span> <span class="post-toc-text">python中使用with打开多个文件</span></a></li></ol>
         </nav>
     </aside>
     
-<article id="post-append"
+<article id="post-with"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">Append vs Extend</h1>
+        <h1 class="post-card-title">python中使用with打开多个文件</h1>
         <div class="post-meta">
-            <time class="post-time" title="2017-04-18 22:30:34" datetime="2017-04-18T14:30:34.126Z"  itemprop="datePublished">2017-04-18</time>
+            <time class="post-time" title="2017-04-22 10:15:25" datetime="2017-04-22T02:15:25.411Z"  itemprop="datePublished">2017-04-22</time>
 
             
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/python/">python</a></li></ul>
@@ -179,11 +179,11 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>What is the different between the list methods <code>append()</code> and <code>extend()</code>?</p>
-<h1 id="append"><a href="#append" class="headerlink" title="append()"></a>append()</h1><p>append: appends object at end<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">x =[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">x.append([<span class="number">4</span>,<span class="number">5</span>])</div><div class="line"><span class="keyword">print</span> (x)</div></pre></td></tr></table></figure></p>
-<p>gives you: <code>[1,2,3,[4,5]]</code></p>
-<h1 id="extend"><a href="#extend" class="headerlink" title="extend()"></a>extend()</h1><p>extend:extends list by appending elements from the iterable<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">x =[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">x.extend([<span class="number">4</span>,<span class="number">5</span>])</div><div class="line"><span class="keyword">print</span> (x)</div></pre></td></tr></table></figure></p>
-<p>gives you <code>[1,2,3,4,5]</code></p>
+            <h1 id="python中使用with打开多个文件"><a href="#python中使用with打开多个文件" class="headerlink" title="python中使用with打开多个文件"></a>python中使用with打开多个文件</h1><p>使用with打开文件的好处不多说，这里记录一下如果要打开多个文件，该怎么书写简捷的代码。</p>
+<p>同时打开三个文件，文件行数一样，程序实现每个文件依次读取一行，同时输出。 首先来一种比较容易想到的写法，如下一样嵌套：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> open(<span class="string">'file1'</span>) <span class="keyword">as</span> f1:</div><div class="line">    <span class="keyword">with</span> open(<span class="string">'file2'</span>) <span class="keyword">as</span> f2:</div><div class="line">        <span class="keyword">with</span> open(<span class="string">'file3'</span>) <span class="keyword">as</span> f3:</div><div class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> f1:</div><div class="line">                j = f2.readline()</div><div class="line">                k = f3.readline()</div><div class="line">                print(i,j,k)</div></pre></td></tr></table></figure></p>
+<p>简捷一点的写法如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> open(<span class="string">'file1'</span>) <span class="keyword">as</span> f1, open(<span class="string">'file2'</span>) <span class="keyword">as</span> f2, open(<span class="string">'file3'</span>) <span class="keyword">as</span> f3:</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> f1:</div><div class="line">        j = f2.readline()</div><div class="line">        k = f3.readline()</div><div class="line">        print(i,j,k)</div></pre></td></tr></table></figure></p>
+<p>还有一种优雅一点的写法：<br>python 里面有<code>contextlib</code>库中有一个是nested，一个是closing，前者用于创建嵌套的上下文，后则用于帮你执行定义好的close函数。但是nested已经过时了，因为with已经可以通过多个上下文的直接嵌套了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> contextlib <span class="keyword">import</span> nested</div><div class="line"><span class="keyword">with</span> nested(open(<span class="string">'file1'</span>), open(<span class="string">'file2'</span>), open(<span class="string">'file3'</span>)) <span class="keyword">as</span> (f1,f2,f3):</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> f1:</div><div class="line">        j = f2.readline()</div><div class="line">        k = f3.readline()</div><div class="line">        print(i,j,k)</div></pre></td></tr></table></figure>
 
         </div>
 
@@ -191,11 +191,11 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2017-04-18T14:31:44.654Z" itemprop="dateUpdated">2017-04-18 22:31:44</time>
+    Last updated: <time datetime="2017-04-22T07:08:54.839Z" itemprop="dateUpdated">2017-04-22 15:08:54</time>
 </span><br>
 
 
-        这里写留言或版权声明：<a href="/2017/04/18/append/" target="_blank" rel="external">http://xls1994.github.io/2017/04/18/append/</a>
+        这里写留言或版权声明：<a href="/2017/04/22/with/" target="_blank" rel="external">http://xls1994.github.io/2017/04/22/with/</a>
     </div>
     <footer>
         <a href="http://xls1994.github.io">
@@ -224,7 +224,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xls1994.github.io/2017/04/18/append/&title=《Append vs Extend》 — Star&pic=http://xls1994.github.io/img/img.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xls1994.github.io/2017/04/22/with/&title=《python中使用with打开多个文件》 — Star&pic=http://xls1994.github.io/img/img.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -234,22 +234,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xls1994.github.io/2017/04/18/append/&title=《Append vs Extend》 — Star&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xls1994.github.io/2017/04/22/with/&title=《python中使用with打开多个文件》 — Star&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xls1994.github.io/2017/04/18/append/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xls1994.github.io/2017/04/22/with/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Append vs Extend》 — Star&url=http://xls1994.github.io/2017/04/18/append/&via=http://xls1994.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《python中使用with打开多个文件》 — Star&url=http://xls1994.github.io/2017/04/22/with/&via=http://xls1994.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xls1994.github.io/2017/04/18/append/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xls1994.github.io/2017/04/22/with/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -272,18 +272,18 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2017/04/18/tf数据读取/" id="post-prev" class="post-nav-link">
+      <a href="/2017/04/18/append/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">TFRecord Demo</h4>
+        <h4 class="title">Append vs Extend</h4>
       </a>
     </div>
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2017/04/22/with/" id="post-next" class="post-nav-link">
+      <a href="/2017/04/22/NumpyBoardCast/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">python中使用with打开多个文件</h4>
+        <h4 class="title">Numpy广播</h4>
       </a>
     </div>
   
@@ -294,7 +294,7 @@
     
 
 <div class="comments" id="comments">
-    <div class="ds-thread" data-thread-key="append" data-title="Append vs Extend" data-url="http://xls1994.github.io/2017/04/18/append/"></div>
+    <div class="ds-thread" data-thread-key="with" data-title="python中使用with打开多个文件" data-url="http://xls1994.github.io/2017/04/22/with/"></div>
 </div>
 <script>
 lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
@@ -379,7 +379,7 @@ lazyScripts.push('//unpkg.com/hexo-theme-material-indigo@1.6.1/js/embed.min.js')
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xls1994.github.io/2017/04/18/append/&title=《Append vs Extend》 — Star&pic=http://xls1994.github.io/img/img.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xls1994.github.io/2017/04/22/with/&title=《python中使用with打开多个文件》 — Star&pic=http://xls1994.github.io/img/img.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -389,22 +389,22 @@ lazyScripts.push('//unpkg.com/hexo-theme-material-indigo@1.6.1/js/embed.min.js')
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xls1994.github.io/2017/04/18/append/&title=《Append vs Extend》 — Star&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xls1994.github.io/2017/04/22/with/&title=《python中使用with打开多个文件》 — Star&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xls1994.github.io/2017/04/18/append/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xls1994.github.io/2017/04/22/with/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Append vs Extend》 — Star&url=http://xls1994.github.io/2017/04/18/append/&via=http://xls1994.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《python中使用with打开多个文件》 — Star&url=http://xls1994.github.io/2017/04/22/with/&via=http://xls1994.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xls1994.github.io/2017/04/18/append/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xls1994.github.io/2017/04/22/with/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -415,7 +415,7 @@ lazyScripts.push('//unpkg.com/hexo-theme-material-indigo@1.6.1/js/embed.min.js')
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://xls1994.github.io/2017/04/18/append/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://xls1994.github.io/2017/04/22/with/" alt="微信分享二维码">
 </div>
 
 

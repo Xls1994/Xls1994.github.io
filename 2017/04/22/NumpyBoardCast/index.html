@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Numpy广播 | Star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="py,numpy">
+    <meta name="description" content="Numpy广播 broadcasting ufunc函数在对两个数组进行计算时，如果两个数组的形状不相同，则会进行广播处理，其处理的规则为：  让所有数组都向其中维数最多的数组看齐，shape属性中不足的部分都通过在前面加1补齐；  输出数组的shape属性是输入数组shape属性在各轴上的最大值；  如果输入数组的某个轴长度为1或与输出数组对应轴的长度相同，这个数组就能够用来计算，否则出错；">
+<meta name="keywords" content="py,numpy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Numpy广播">
+<meta property="og:url" content="http://xls1994.github.io/2017/04/22/NumpyBoardCast/index.html">
+<meta property="og:site_name" content="Star">
+<meta property="og:description" content="Numpy广播 broadcasting ufunc函数在对两个数组进行计算时，如果两个数组的形状不相同，则会进行广播处理，其处理的规则为：  让所有数组都向其中维数最多的数组看齐，shape属性中不足的部分都通过在前面加1补齐；  输出数组的shape属性是输入数组shape属性在各轴上的最大值；  如果输入数组的某个轴长度为1或与输出数组对应轴的长度相同，这个数组就能够用来计算，否则出错；">
+<meta property="og:updated_time" content="2017-04-22T07:09:24.385Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Numpy广播">
+<meta name="twitter:description" content="Numpy广播 broadcasting ufunc函数在对两个数组进行计算时，如果两个数组的形状不相同，则会进行广播处理，其处理的规则为：  让所有数组都向其中维数最多的数组看齐，shape属性中不足的部分都通过在前面加1补齐；  输出数组的shape属性是输入数组shape属性在各轴上的最大值；  如果输入数组的某个轴长度为1或与输出数组对应轴的长度相同，这个数组就能够用来计算，否则出错；">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@1.6.1/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/img.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">November</h5>
+          <a href="mailto:1060687688@qq.com" title="1060687688@qq.com" class="mail">1060687688@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Xls1994" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Numpy广播</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Numpy广播</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-22T02:15:25.433Z" itemprop="datePublished" class="page-time">
+  2017-04-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Numpy/">Numpy</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-NumpyBoardCast"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Numpy广播</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-04-22 10:15:25" datetime="2017-04-22T02:15:25.433Z"  itemprop="datePublished">2017-04-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Numpy/">Numpy</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Numpy广播 broadcasting</p>
+<p>ufunc函数在对两个数组进行计算时，如果两个数组的形状不相同，则会进行广播处理，其处理的规则为：</p>
+<ul>
+<li><p>让所有数组都向其中维数最多的数组看齐，shape属性中不足的部分都通过在前面加1补齐；</p>
+</li>
+<li><p>输出数组的shape属性是输入数组shape属性在各轴上的最大值；</p>
+</li>
+<li><p>如果输入数组的某个轴长度为1或与输出数组对应轴的长度相同，这个数组就能够用来计算，否则出错；</p>
+</li>
+<li><p>当输入数组的某个轴长度为1时，沿着此轴运算时都用此轴上的第一组值；</p>
+</li>
+</ul>
+<p>如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">a = np.array(<span class="number">0</span>,<span class="number">60</span>,<span class="number">10</span>).reshape(<span class="number">-1</span>,<span class="number">1</span>)</div><div class="line">b = np.array(<span class="number">0</span>,<span class="number">5</span>)</div></pre></td></tr></table></figure></p>
+<p>两个数组，其中a.shape = (6,1)， b.shape=(5,)，广播处理过程为：</p>
+<ul>
+<li><p>b数组向a数组看齐，并且在shape属性前面加1，此时，b.shape = (1,5)</p>
+</li>
+<li><p>输出数组的shape为(6,5)，是数组shape各轴上的最大值；</p>
+</li>
+<li><p>a.shape = (6,1)，0轴与输出数组长度相同，1轴为1，可以用来计算；b.shape = (1,5)，0轴为1，1轴与输出数组长度相同，可以用来计算；</p>
+</li>
+<li><p>a数组的1轴长度为1，故a数组在1轴上的值都沿用 a[:,0]的值；b数组的0轴长度为1，故b数组0轴上的值都沿用 b[0,:]的值，此时，a，b数组可以看做：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">a = array([[<span class="number">0</span>,  <span class="number">0</span>,  <span class="number">0</span>,  <span class="number">0</span>,  <span class="number">0</span>],</div><div class="line">                [<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>],</div><div class="line">                [<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>],</div><div class="line">                [<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>],</div><div class="line">                [<span class="number">40</span>,<span class="number">40</span>,<span class="number">40</span>,<span class="number">40</span>,<span class="number">40</span>],</div><div class="line">                [<span class="number">50</span>,<span class="number">50</span>,<span class="number">50</span>,<span class="number">50</span>,<span class="number">50</span>]])</div><div class="line"></div><div class="line">b = array([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],</div><div class="line">                 [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],</div><div class="line">                 [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],</div><div class="line">                 [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],</div><div class="line">                 [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],</div><div class="line">                 [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]])</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>此时，a和b数组就可以进行相应的ufunc操作了；</p>
+<p>numpy在内部真正运算时，并不会对数组进行重复的填充操作，这样太浪费空间；</p>
+<p>事实上，numpy还提供了一个常用的网格对象来进行常用的广播操作：ogrid和mgrid</p>
+<p>其中，np.ogrid必须对其进行切片操作，并且返回一个数组，数组的每个值都是一个只有单一轴的数组，如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">np.ogrid[:<span class="number">5</span>,:<span class="number">4</span>] =[array([[<span class="number">0</span>],[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>],[<span class="number">4</span>]]), </div><div class="line">                  array([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]])]</div></pre></td></tr></table></figure>
+<p>而np.mgrid则是填充后的结果（由于比较消耗内存，应该使用ogrid代替）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">np.mgrid[:<span class="number">5</span>,:<span class="number">5</span>] = array([[[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</div><div class="line">[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>],</div><div class="line">[<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>],</div><div class="line">[<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>],</div><div class="line">[<span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>]],</div><div class="line">[[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]]])</div></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-04-22T07:09:24.385Z" itemprop="dateUpdated">2017-04-22 15:09:24</time>
+</span><br>
+
+
+        这里写留言或版权声明：<a href="/2017/04/22/NumpyBoardCast/" target="_blank" rel="external">http://xls1994.github.io/2017/04/22/NumpyBoardCast/</a>
+    </div>
+    <footer>
+        <a href="http://xls1994.github.io">
+            <img src="/img/img.jpg" alt="November">
+            November
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/numpy/">numpy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/py/">py</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xls1994.github.io/2017/04/22/NumpyBoardCast/&title=《Numpy广播》 — Star&pic=http://xls1994.github.io/img/img.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xls1994.github.io/2017/04/22/NumpyBoardCast/&title=《Numpy广播》 — Star&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xls1994.github.io/2017/04/22/NumpyBoardCast/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Numpy广播》 — Star&url=http://xls1994.github.io/2017/04/22/NumpyBoardCast/&via=http://xls1994.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xls1994.github.io/2017/04/22/NumpyBoardCast/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/04/22/with/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">python中使用with打开多个文件</h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="NumpyBoardCast" data-title="Numpy广播" data-url="http://xls1994.github.io/2017/04/22/NumpyBoardCast/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'ysblog', theme: 'none'};
+lazyScripts.push('//unpkg.com/hexo-theme-material-indigo@1.6.1/js/embed.min.js');
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>November &copy; 2015 - 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xls1994.github.io/2017/04/22/NumpyBoardCast/&title=《Numpy广播》 — Star&pic=http://xls1994.github.io/img/img.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xls1994.github.io/2017/04/22/NumpyBoardCast/&title=《Numpy广播》 — Star&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xls1994.github.io/2017/04/22/NumpyBoardCast/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Numpy广播》 — Star&url=http://xls1994.github.io/2017/04/22/NumpyBoardCast/&via=http://xls1994.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xls1994.github.io/2017/04/22/NumpyBoardCast/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://xls1994.github.io/2017/04/22/NumpyBoardCast/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@1.6.1/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@1.6.1/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

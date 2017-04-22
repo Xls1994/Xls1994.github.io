@@ -106,7 +106,7 @@
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -138,6 +138,112 @@
 <div class="container body-wrap">
 
     <ul class="post-list">
+    
+        <li class="post-list-item fade">
+            <article id="post-NumpyBoardCast"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-04-22 10:15:25" datetime="2017-04-22T02:15:25.433Z"  itemprop="datePublished">2017-04-22</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Numpy/">Numpy</a></li></ul>
+
+
+
+        
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/04/22/NumpyBoardCast/">Numpy广播</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        Numpy广播 broadcasting
+ufunc函数在对两个数组进行计算时，如果两个数组的形状不相同，则会进行广播处理，其处理的规则为：
+
+让所有数组都向其中维数最多的数组看齐，shape属性中不足的部分都通过在前面加1补齐；
+
+输出数组的shape属性是输入数组shape属性在各轴上的最大值；
+
+如果输入数组的某个轴长度为1或与输出数组对应轴的长度相同，这个数组就能够用来计算，否则出错...
+    
+
+        <a href="/2017/04/22/NumpyBoardCast/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/numpy/">numpy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/py/">py</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-with"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-04-22 10:15:25" datetime="2017-04-22T02:15:25.411Z"  itemprop="datePublished">2017-04-22</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/python/">python</a></li></ul>
+
+
+
+        
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/04/22/with/">python中使用with打开多个文件</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        python中使用with打开多个文件使用with打开文件的好处不多说，这里记录一下如果要打开多个文件，该怎么书写简捷的代码。
+同时打开三个文件，文件行数一样，程序实现每个文件依次读取一行，同时输出。 首先来一种比较容易想到的写法，如下一样嵌套：1234567with open('file1') as f1:    with open('file2') as f2:        with ...
+    
+
+        <a href="/2017/04/22/with/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/py/">py</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
     
         <li class="post-list-item fade">
             <article id="post-append"
@@ -177,7 +283,7 @@ extend()extend:extends list...
     
 
         <a href="/2017/04/18/append/" class="post-more waves-effect waves-button">
-            阅读全文…
+            Continue reading...
         </a>
     </div>
     
@@ -230,7 +336,7 @@ tensorflow在读取像imagenet这种大量图像数据，不能一次性load进�
     
 
         <a href="/2017/04/18/tf数据读取/" class="post-more waves-effect waves-button">
-            阅读全文…
+            Continue reading...
         </a>
     </div>
     
@@ -265,7 +371,7 @@ tensorflow在读取像imagenet这种大量图像数据，不能一次性load进�
 
         <p>
             
-            <span>博客内容遵循<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
         </p>
     </div>
     <div class="bottom">
