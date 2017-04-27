@@ -91,11 +91,11 @@
 
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Star">
+<meta property="og:title" content="yangyl's blog">
 <meta property="og:url" content="http://xls1994.github.io/index.html">
-<meta property="og:site_name" content="Star">
+<meta property="og:site_name" content="yangyl's blog">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Star">
+<meta name="twitter:title" content="yangyl's blog">
 
 
 
@@ -129,7 +129,7 @@
 
 
 
-  <title>Star</title>
+  <title>yangyl's blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -167,7 +167,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Star</span>
+        <span class="site-title">yangyl's blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -231,6 +231,16 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-cv">
+          <a href="/cv" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tint"></i> <br />
+            
+            个人简历
+          </a>
+        </li>
+      
 
       
     </ul>
@@ -269,7 +279,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Star">
+      <meta itemprop="name" content="yangyl's blog">
     </span>
 
     
@@ -357,8 +367,7 @@
 
       
         
-          
-            <p>Numpy广播 broadcasting</p>
+          <p>Numpy广播 broadcasting</p>
 <p>ufunc函数在对两个数组进行计算时，如果两个数组的形状不相同，则会进行广播处理，其处理的规则为：</p>
 <ul>
 <li><p>让所有数组都向其中维数最多的数组看齐，shape属性中不足的部分都通过在前面加1补齐；</p>
@@ -368,30 +377,13 @@
 <li><p>如果输入数组的某个轴长度为1或与输出数组对应轴的长度相同，这个数组就能够用来计算，否则出错；</p>
 </li>
 <li><p>当输入数组的某个轴长度为1时，沿着此轴运算时都用此轴上的第一组值；</p>
-</li>
-</ul>
-<p>如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">a = np.array(<span class="number">0</span>,<span class="number">60</span>,<span class="number">10</span>).reshape(<span class="number">-1</span>,<span class="number">1</span>)</div><div class="line">b = np.array(<span class="number">0</span>,<span class="number">5</span>)</div></pre></td></tr></table></figure></p>
-<p>两个数组，其中a.shape = (6,1)， b.shape=(5,)，广播处理过程为：</p>
-<ul>
-<li><p>b数组向a数组看齐，并且在shape属性前面加1，此时，b.shape = (1,5)</p>
-</li>
-<li><p>输出数组的shape为(6,5)，是数组shape各轴上的最大值；</p>
-</li>
-<li><p>a.shape = (6,1)，0轴与输出数组长度相同，1轴为1，可以用来计算；b.shape = (1,5)，0轴为1，1轴与输出数组长度相同，可以用来计算；</p>
-</li>
-<li><p>a数组的1轴长度为1，故a数组在1轴上的值都沿用 a[:,0]的值；b数组的0轴长度为1，故b数组0轴上的值都沿用 b[0,:]的值，此时，a，b数组可以看做：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">a = array([[<span class="number">0</span>,  <span class="number">0</span>,  <span class="number">0</span>,  <span class="number">0</span>,  <span class="number">0</span>],</div><div class="line">                [<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>],</div><div class="line">                [<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>],</div><div class="line">                [<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>,<span class="number">30</span>],</div><div class="line">                [<span class="number">40</span>,<span class="number">40</span>,<span class="number">40</span>,<span class="number">40</span>,<span class="number">40</span>],</div><div class="line">                [<span class="number">50</span>,<span class="number">50</span>,<span class="number">50</span>,<span class="number">50</span>,<span class="number">50</span>]])</div><div class="line"></div><div class="line">b = array([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],</div><div class="line">                 [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],</div><div class="line">                 [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],</div><div class="line">                 [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],</div><div class="line">                 [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],</div><div class="line">                 [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]])</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>此时，a和b数组就可以进行相应的ufunc操作了；</p>
-<p>numpy在内部真正运算时，并不会对数组进行重复的填充操作，这样太浪费空间；</p>
-<p>事实上，numpy还提供了一个常用的网格对象来进行常用的广播操作：ogrid和mgrid</p>
-<p>其中，np.ogrid必须对其进行切片操作，并且返回一个数组，数组的每个值都是一个只有单一轴的数组，如：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">np.ogrid[:<span class="number">5</span>,:<span class="number">4</span>] =[array([[<span class="number">0</span>],[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>],[<span class="number">4</span>]]), </div><div class="line">                  array([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]])]</div></pre></td></tr></table></figure>
-<p>而np.mgrid则是填充后的结果（由于比较消耗内存，应该使用ogrid代替）：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">np.mgrid[:<span class="number">5</span>,:<span class="number">5</span>] = array([[[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</div><div class="line">[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>],</div><div class="line">[<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>],</div><div class="line">[<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>],</div><div class="line">[<span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>]],</div><div class="line">[[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]]])</div></pre></td></tr></table></figure>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/22/NumpyBoardCast/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -442,7 +434,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Star">
+      <meta itemprop="name" content="yangyl's blog">
     </span>
 
     
@@ -530,14 +522,15 @@
 
       
         
-          
-            <h1 id="python中使用with打开多个文件"><a href="#python中使用with打开多个文件" class="headerlink" title="python中使用with打开多个文件"></a>python中使用with打开多个文件</h1><p>使用with打开文件的好处不多说，这里记录一下如果要打开多个文件，该怎么书写简捷的代码。</p>
+          <h1 id="python中使用with打开多个文件"><a href="#python中使用with打开多个文件" class="headerlink" title="python中使用with打开多个文件"></a>python中使用with打开多个文件</h1><p>使用with打开文件的好处不多说，这里记录一下如果要打开多个文件，该怎么书写简捷的代码。</p>
 <p>同时打开三个文件，文件行数一样，程序实现每个文件依次读取一行，同时输出。 首先来一种比较容易想到的写法，如下一样嵌套：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> open(<span class="string">'file1'</span>) <span class="keyword">as</span> f1:</div><div class="line">    <span class="keyword">with</span> open(<span class="string">'file2'</span>) <span class="keyword">as</span> f2:</div><div class="line">        <span class="keyword">with</span> open(<span class="string">'file3'</span>) <span class="keyword">as</span> f3:</div><div class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> f1:</div><div class="line">                j = f2.readline()</div><div class="line">                k = f3.readline()</div><div class="line">                print(i,j,k)</div></pre></td></tr></table></figure></p>
-<p>简捷一点的写法如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> open(<span class="string">'file1'</span>) <span class="keyword">as</span> f1, open(<span class="string">'file2'</span>) <span class="keyword">as</span> f2, open(<span class="string">'file3'</span>) <span class="keyword">as</span> f3:</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> f1:</div><div class="line">        j = f2.readline()</div><div class="line">        k = f3.readline()</div><div class="line">        print(i,j,k)</div></pre></td></tr></table></figure></p>
-<p>还有一种优雅一点的写法：<br>python 里面有<code>contextlib</code>库中有一个是nested，一个是closing，前者用于创建嵌套的上下文，后则用于帮你执行定义好的close函数。但是nested已经过时了，因为with已经可以通过多个上下文的直接嵌套了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> contextlib <span class="keyword">import</span> nested</div><div class="line"><span class="keyword">with</span> nested(open(<span class="string">'file1'</span>), open(<span class="string">'file2'</span>), open(<span class="string">'file3'</span>)) <span class="keyword">as</span> (f1,f2,f3):</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> f1:</div><div class="line">        j = f2.readline()</div><div class="line">        k = f3.readline()</div><div class="line">        print(i,j,k)</div></pre></td></tr></table></figure>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/22/with/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -588,7 +581,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Star">
+      <meta itemprop="name" content="yangyl's blog">
     </span>
 
     
@@ -734,7 +727,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Star">
+      <meta itemprop="name" content="yangyl's blog">
     </span>
 
     
@@ -977,10 +970,10 @@ tf.TFRecordReader读取细节
             
             
             <div class="site-state-item site-state-categories">
-              
+              <a href="/categories/index.html">
                 <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
-              
+              </a>
             </div>
           
 
@@ -988,10 +981,10 @@ tf.TFRecordReader读取细节
             
             
             <div class="site-state-item site-state-tags">
-              
+              <a href="/tags/index.html">
                 <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
-              
+              </a>
             </div>
           
 
@@ -1001,12 +994,37 @@ tf.TFRecordReader读取细节
 
         <div class="links-of-author motion-element">
           
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xls1994" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
         </div>
 
         
         
 
         
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://zeco.ml/" title="zeco" target="_blank">zeco</a>
+                </li>
+              
+            </ul>
+          </div>
         
 
         
@@ -1085,6 +1103,8 @@ tf.TFRecordReader读取细节
   
 
 
+  
+
 
 
 
@@ -1112,6 +1132,9 @@ tf.TFRecordReader读取细节
 
   
   <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
 
 
   

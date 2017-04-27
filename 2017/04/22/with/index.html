@@ -95,9 +95,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="python中使用with打开多个文件">
 <meta property="og:url" content="http://xls1994.github.io/2017/04/22/with/index.html">
-<meta property="og:site_name" content="Star">
+<meta property="og:site_name" content="yangyl's blog">
 <meta property="og:description" content="python中使用with打开多个文件使用with打开文件的好处不多说，这里记录一下如果要打开多个文件，该怎么书写简捷的代码。 同时打开三个文件，文件行数一样，程序实现每个文件依次读取一行，同时输出。 首先来一种比较容易想到的写法，如下一样嵌套：1234567with open(&apos;file1&apos;) as f1:    with open(&apos;file2&apos;) as f2:        with ope">
-<meta property="og:updated_time" content="2017-04-22T07:08:54.839Z">
+<meta property="og:updated_time" content="2017-04-26T15:39:14.824Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python中使用with打开多个文件">
 <meta name="twitter:description" content="python中使用with打开多个文件使用with打开文件的好处不多说，这里记录一下如果要打开多个文件，该怎么书写简捷的代码。 同时打开三个文件，文件行数一样，程序实现每个文件依次读取一行，同时输出。 首先来一种比较容易想到的写法，如下一样嵌套：1234567with open(&apos;file1&apos;) as f1:    with open(&apos;file2&apos;) as f2:        with ope">
@@ -134,7 +134,7 @@
 
 
 
-  <title>python中使用with打开多个文件 | Star</title>
+  <title>python中使用with打开多个文件 | yangyl's blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -170,7 +170,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Star</span>
+        <span class="site-title">yangyl's blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -234,6 +234,16 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-cv">
+          <a href="/cv" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tint"></i> <br />
+            
+            个人简历
+          </a>
+        </li>
+      
 
       
     </ul>
@@ -272,7 +282,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Star">
+      <meta itemprop="name" content="yangyl's blog">
     </span>
 
     
@@ -358,6 +368,7 @@
       
         <h1 id="python中使用with打开多个文件"><a href="#python中使用with打开多个文件" class="headerlink" title="python中使用with打开多个文件"></a>python中使用with打开多个文件</h1><p>使用with打开文件的好处不多说，这里记录一下如果要打开多个文件，该怎么书写简捷的代码。</p>
 <p>同时打开三个文件，文件行数一样，程序实现每个文件依次读取一行，同时输出。 首先来一种比较容易想到的写法，如下一样嵌套：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> open(<span class="string">'file1'</span>) <span class="keyword">as</span> f1:</div><div class="line">    <span class="keyword">with</span> open(<span class="string">'file2'</span>) <span class="keyword">as</span> f2:</div><div class="line">        <span class="keyword">with</span> open(<span class="string">'file3'</span>) <span class="keyword">as</span> f3:</div><div class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> f1:</div><div class="line">                j = f2.readline()</div><div class="line">                k = f3.readline()</div><div class="line">                print(i,j,k)</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>简捷一点的写法如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> open(<span class="string">'file1'</span>) <span class="keyword">as</span> f1, open(<span class="string">'file2'</span>) <span class="keyword">as</span> f2, open(<span class="string">'file3'</span>) <span class="keyword">as</span> f3:</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> f1:</div><div class="line">        j = f2.readline()</div><div class="line">        k = f3.readline()</div><div class="line">        print(i,j,k)</div></pre></td></tr></table></figure></p>
 <p>还有一种优雅一点的写法：<br>python 里面有<code>contextlib</code>库中有一个是nested，一个是closing，前者用于创建嵌套的上下文，后则用于帮你执行定义好的close函数。但是nested已经过时了，因为with已经可以通过多个上下文的直接嵌套了。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> contextlib <span class="keyword">import</span> nested</div><div class="line"><span class="keyword">with</span> nested(open(<span class="string">'file1'</span>), open(<span class="string">'file2'</span>), open(<span class="string">'file3'</span>)) <span class="keyword">as</span> (f1,f2,f3):</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> f1:</div><div class="line">        j = f2.readline()</div><div class="line">        k = f3.readline()</div><div class="line">        print(i,j,k)</div></pre></td></tr></table></figure>
@@ -497,10 +508,10 @@
             
             
             <div class="site-state-item site-state-categories">
-              
+              <a href="/categories/index.html">
                 <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
-              
+              </a>
             </div>
           
 
@@ -508,10 +519,10 @@
             
             
             <div class="site-state-item site-state-tags">
-              
+              <a href="/tags/index.html">
                 <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
-              
+              </a>
             </div>
           
 
@@ -521,12 +532,37 @@
 
         <div class="links-of-author motion-element">
           
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xls1994" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
         </div>
 
         
         
 
         
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://zeco.ml/" title="zeco" target="_blank">zeco</a>
+                </li>
+              
+            </ul>
+          </div>
         
 
         
@@ -621,6 +657,8 @@
   
 
 
+  
+
 
 
 
@@ -648,6 +686,9 @@
 
   
   <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
 
 
   
