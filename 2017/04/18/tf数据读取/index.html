@@ -90,17 +90,17 @@
 
 
 
-<meta name="description" content="tensorflow的数据读取 tensorflow在读取像imagenet这种大量图像数据，不能一次性load进内存时有几个坑，Mark一记，以助后来者。关于多GPU和分布式，本文只讨论数据并行方式，即每个GPU上面运行一个网络，称为tower。 * 数据格式TFRecord * 数据读取第一层封装——Queue，Coordinator，QueueRunner * 常用封装——tf.train.">
+<meta name="description" content="tensorflow的数据读取 tensorflow在读取像imagenet这种大量图像数据，不能一次性load进内存时有几个坑，Mark一记，以助后来者。&amp;lt;!-- more --&amp;gt; 关于多GPU和分布式，本文只讨论数据并行方式，即每个GPU上面运行一个网络，称为tower。 * 数据格式TFRecord * 数据读取第一层封装——Queue，Coordinator，QueueRunn">
 <meta name="keywords" content="tf">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TFRecord Demo">
 <meta property="og:url" content="http://xls1994.github.io/2017/04/18/tf数据读取/index.html">
 <meta property="og:site_name" content="yangyl's blog">
-<meta property="og:description" content="tensorflow的数据读取 tensorflow在读取像imagenet这种大量图像数据，不能一次性load进内存时有几个坑，Mark一记，以助后来者。关于多GPU和分布式，本文只讨论数据并行方式，即每个GPU上面运行一个网络，称为tower。 * 数据格式TFRecord * 数据读取第一层封装——Queue，Coordinator，QueueRunner * 常用封装——tf.train.">
-<meta property="og:updated_time" content="2017-04-18T14:34:08.668Z">
+<meta property="og:description" content="tensorflow的数据读取 tensorflow在读取像imagenet这种大量图像数据，不能一次性load进内存时有几个坑，Mark一记，以助后来者。&amp;lt;!-- more --&amp;gt; 关于多GPU和分布式，本文只讨论数据并行方式，即每个GPU上面运行一个网络，称为tower。 * 数据格式TFRecord * 数据读取第一层封装——Queue，Coordinator，QueueRunn">
+<meta property="og:updated_time" content="2017-04-30T14:54:04.321Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TFRecord Demo">
-<meta name="twitter:description" content="tensorflow的数据读取 tensorflow在读取像imagenet这种大量图像数据，不能一次性load进内存时有几个坑，Mark一记，以助后来者。关于多GPU和分布式，本文只讨论数据并行方式，即每个GPU上面运行一个网络，称为tower。 * 数据格式TFRecord * 数据读取第一层封装——Queue，Coordinator，QueueRunner * 常用封装——tf.train.">
+<meta name="twitter:description" content="tensorflow的数据读取 tensorflow在读取像imagenet这种大量图像数据，不能一次性load进内存时有几个坑，Mark一记，以助后来者。&amp;lt;!-- more --&amp;gt; 关于多GPU和分布式，本文只讨论数据并行方式，即每个GPU上面运行一个网络，称为tower。 * 数据格式TFRecord * 数据读取第一层封装——Queue，Coordinator，QueueRunn">
 
 
 
@@ -367,7 +367,8 @@
 
       
         <p>tensorflow的数据读取</p>
-<pre><code>tensorflow在读取像imagenet这种大量图像数据，不能一次性load进内存时有几个坑，Mark一记，以助后来者。关于多GPU和分布式，本文只讨论数据并行方式，即每个GPU上面运行一个网络，称为tower。
+<pre><code>tensorflow在读取像imagenet这种大量图像数据，不能一次性load进内存时有几个坑，Mark一记，以助后来者。&lt;!-- more --&gt;
+关于多GPU和分布式，本文只讨论数据并行方式，即每个GPU上面运行一个网络，称为tower。
 * 数据格式TFRecord
 * 数据读取第一层封装——Queue，Coordinator，QueueRunner
 * 常用封装——tf.train.xxx_input_producer,tf.reader,tf.train.batch
@@ -544,7 +545,7 @@ tf.TFRecordReader读取细节
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -555,7 +556,7 @@ tf.TFRecordReader读取细节
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -566,7 +567,7 @@ tf.TFRecordReader读取细节
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

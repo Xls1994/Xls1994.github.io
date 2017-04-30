@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="py," />
+  <meta name="keywords" content="ml," />
 
 
 
@@ -90,17 +90,19 @@
 
 
 
-<meta name="description" content="python中使用with打开多个文件使用with打开文件的好处不多说，这里记录一下如果要打开多个文件，该怎么书写简捷的代码。 同时打开三个文件，文件行数一样，程序实现每个文件依次读取一行，同时输出。 首先来一种比较容易想到的写法，如下一样嵌套：1234567with open(&apos;file1&apos;) as f1:    with open(&apos;file2&apos;) as f2:        with ope">
-<meta name="keywords" content="py">
+<meta name="description" content="集成学习集成学习就是将多个学习器集成在一起完成某个任务。集成学习可以有效的提升模型的性能，取得更好的结果。">
+<meta name="keywords" content="ml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python中使用with打开多个文件">
-<meta property="og:url" content="http://xls1994.github.io/2017/04/22/with/index.html">
+<meta property="og:title" content="集成学习研究">
+<meta property="og:url" content="http://xls1994.github.io/2017/04/30/stacking/index.html">
 <meta property="og:site_name" content="yangyl's blog">
-<meta property="og:description" content="python中使用with打开多个文件使用with打开文件的好处不多说，这里记录一下如果要打开多个文件，该怎么书写简捷的代码。 同时打开三个文件，文件行数一样，程序实现每个文件依次读取一行，同时输出。 首先来一种比较容易想到的写法，如下一样嵌套：1234567with open(&apos;file1&apos;) as f1:    with open(&apos;file2&apos;) as f2:        with ope">
-<meta property="og:updated_time" content="2017-04-26T15:39:14.824Z">
+<meta property="og:description" content="集成学习集成学习就是将多个学习器集成在一起完成某个任务。集成学习可以有效的提升模型的性能，取得更好的结果。">
+<meta property="og:image" content="http://xls1994.github.io/2017/04/30/stacking/stacking.jpg">
+<meta property="og:updated_time" content="2017-04-30T14:48:26.581Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python中使用with打开多个文件">
-<meta name="twitter:description" content="python中使用with打开多个文件使用with打开文件的好处不多说，这里记录一下如果要打开多个文件，该怎么书写简捷的代码。 同时打开三个文件，文件行数一样，程序实现每个文件依次读取一行，同时输出。 首先来一种比较容易想到的写法，如下一样嵌套：1234567with open(&apos;file1&apos;) as f1:    with open(&apos;file2&apos;) as f2:        with ope">
+<meta name="twitter:title" content="集成学习研究">
+<meta name="twitter:description" content="集成学习集成学习就是将多个学习器集成在一起完成某个任务。集成学习可以有效的提升模型的性能，取得更好的结果。">
+<meta name="twitter:image" content="http://xls1994.github.io/2017/04/30/stacking/stacking.jpg">
 
 
 
@@ -128,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://xls1994.github.io/2017/04/22/with/"/>
+  <link rel="canonical" href="http://xls1994.github.io/2017/04/30/stacking/"/>
 
 
 
 
 
-  <title>python中使用with打开多个文件 | yangyl's blog</title>
+  <title>集成学习研究 | yangyl's blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -273,7 +275,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://xls1994.github.io/2017/04/22/with/">
+    <link itemprop="mainEntityOfPage" href="http://xls1994.github.io/2017/04/30/stacking/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yangyl">
@@ -294,7 +296,7 @@
             
             
               
-                python中使用with打开多个文件
+                集成学习研究
               
             
           </h1>
@@ -309,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-22T10:15:25+08:00">
-                2017-04-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-30T19:17:36+08:00">
+                2017-04-30
               </time>
             
 
@@ -332,8 +334,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="/categories/machinelearning/" itemprop="url" rel="index">
+                    <span itemprop="name">machinelearning</span>
                   </a>
                 </span>
 
@@ -366,12 +368,19 @@
       
 
       
-        <h1 id="python中使用with打开多个文件"><a href="#python中使用with打开多个文件" class="headerlink" title="python中使用with打开多个文件"></a>python中使用with打开多个文件</h1><p>使用with打开文件的好处不多说，这里记录一下如果要打开多个文件，该怎么书写简捷的代码。</p>
-<p>同时打开三个文件，文件行数一样，程序实现每个文件依次读取一行，同时输出。 首先来一种比较容易想到的写法，如下一样嵌套：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> open(<span class="string">'file1'</span>) <span class="keyword">as</span> f1:</div><div class="line">    <span class="keyword">with</span> open(<span class="string">'file2'</span>) <span class="keyword">as</span> f2:</div><div class="line">        <span class="keyword">with</span> open(<span class="string">'file3'</span>) <span class="keyword">as</span> f3:</div><div class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> f1:</div><div class="line">                j = f2.readline()</div><div class="line">                k = f3.readline()</div><div class="line">                print(i,j,k)</div></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<p>简捷一点的写法如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> open(<span class="string">'file1'</span>) <span class="keyword">as</span> f1, open(<span class="string">'file2'</span>) <span class="keyword">as</span> f2, open(<span class="string">'file3'</span>) <span class="keyword">as</span> f3:</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> f1:</div><div class="line">        j = f2.readline()</div><div class="line">        k = f3.readline()</div><div class="line">        print(i,j,k)</div></pre></td></tr></table></figure></p>
-<p>还有一种优雅一点的写法：<br>python 里面有<code>contextlib</code>库中有一个是nested，一个是closing，前者用于创建嵌套的上下文，后则用于帮你执行定义好的close函数。但是nested已经过时了，因为with已经可以通过多个上下文的直接嵌套了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> contextlib <span class="keyword">import</span> nested</div><div class="line"><span class="keyword">with</span> nested(open(<span class="string">'file1'</span>), open(<span class="string">'file2'</span>), open(<span class="string">'file3'</span>)) <span class="keyword">as</span> (f1,f2,f3):</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> f1:</div><div class="line">        j = f2.readline()</div><div class="line">        k = f3.readline()</div><div class="line">        print(i,j,k)</div></pre></td></tr></table></figure>
+        <h1 id="集成学习"><a href="#集成学习" class="headerlink" title="集成学习"></a>集成学习</h1><p>集成学习就是将多个学习器集成在一起完成某个任务。集成学习可以有效的提升模型的性能，取得更好的结果。<br><a id="more"></a><br>一般来说，按照基本分类器之间的类型关系可以把集成学习方法划分为异态集成学习和同态集成学习。同态集成学习主要有Bagging和Boosting方法，异态集成学习有Stacking方法。集成学习要求基本的学习器错误率不能超过0.5，否则集成学习结果会提高错误率。</p>
+<h2 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h2><p>Bagging就是让一个学习算法学习多轮，训练不同的模型。每一轮的训练集是从初始的训练集中随机取出n个数据进行训练，每次训练是相互独立的过程。对于训练得到的n个模型，分类问题可以采用投票方法，回归问题可以采用平均的方法来进行对测试样例的判断。</p>
+<ul>
+<li><p>Voting 投票策略就是每个模型对测试样例进行投票，票数多的为测试的结果，如果出现投票数相同，要么随机选择一个，要么重新训练一个模型进行再分类。</p>
+</li>
+<li><p>Average 回归问题对所有的结果进行平均，一个改进的版本可以用加权的方式进行平均。例如A、B、C三个分类器得到的结果先进行排序，根据排序的不同赋予不同的权重</p>
+</li>
+</ul>
+<h2 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h2><p>Boosting利用一种迭代的方法，每一次训练的数据都在前一次训练的基础上产生。具体来说就是在每一次训练的时候会更加关心分类错误的样例，给这些分类错误的样例增加更大的权重。然后进行迭代训练，最后将这些分类器进行加权得到最后的分类器。但是boosting方法虽然会比bagging更容易得到好的效果，也会存在过拟合的问题。</p>
+<h2 id="Stacking"><a href="#Stacking" class="headerlink" title="Stacking"></a>Stacking</h2><p>Stacking本质上是一种分层的结构，第一层通常是我们使用的不同基础模型，例如NN、决策树、KNN等。然后最后一层模型一般使用逻辑回归（LR）对这些模型进行进一步训练。</p>
+<p>下图所示的是一个基本的二阶段stacking模型的示例。stacking的时候一般应选择相关性小的模型进行融合，以便让高层次的模型学到更多的信息，提高准确率。</p>
+<p><img src="./stacking.jpg" alt="stacking"></p>
+<p>首先，在整个训练集通过五折交叉构造不同的训练集和验证集，第一阶段的每个分类器根据各自4份的训练集进行训练，并用验证集进行验证，将验证集的输出进行保存。将每个分类器的验证集的输出保存，并作为第二阶段分类器的输入。然后在整个训练集上训练第二阶段的分类器。第二阶段分类器的输出为训练集的标签（train_label）</p>
 
       
     </div>
@@ -401,7 +410,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/py/" rel="tag"># py</a>
+            <a href="/tags/ml/" rel="tag"># ml</a>
           
         </div>
       
@@ -414,18 +423,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/22/NumpyBoardCast/" rel="next" title="Numpy广播">
-                <i class="fa fa-chevron-left"></i> Numpy广播
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/18/append/" rel="prev" title="Append vs Extend">
-                Append vs Extend <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/22/NumpyBoardCast/" rel="prev" title="Numpy广播">
+                Numpy广播 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -580,7 +585,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#python中使用with打开多个文件"><span class="nav-number">1.</span> <span class="nav-text">python中使用with打开多个文件</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#集成学习"><span class="nav-number">1.</span> <span class="nav-text">集成学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bagging"><span class="nav-number">1.1.</span> <span class="nav-text">Bagging</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Boosting"><span class="nav-number">1.2.</span> <span class="nav-text">Boosting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stacking"><span class="nav-number">1.3.</span> <span class="nav-text">Stacking</span></a></li></ol></li></ol></div>
             
 
           </div>
