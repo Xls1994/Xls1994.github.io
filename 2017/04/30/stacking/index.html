@@ -97,12 +97,12 @@
 <meta property="og:url" content="http://xls1994.github.io/2017/04/30/stacking/index.html">
 <meta property="og:site_name" content="yangyl's blog">
 <meta property="og:description" content="集成学习集成学习就是将多个学习器集成在一起完成某个任务。集成学习可以有效的提升模型的性能，取得更好的结果。">
-<meta property="og:image" content="http://xls1994.github.io/2017/04/30/stacking/stacking.jpg">
-<meta property="og:updated_time" content="2017-04-30T14:48:26.581Z">
+<meta property="og:image" content="http://xls1994.github.io/2017/04/30/img/stacking.jpg">
+<meta property="og:updated_time" content="2017-05-01T10:38:03.982Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="集成学习研究">
 <meta name="twitter:description" content="集成学习集成学习就是将多个学习器集成在一起完成某个任务。集成学习可以有效的提升模型的性能，取得更好的结果。">
-<meta name="twitter:image" content="http://xls1994.github.io/2017/04/30/stacking/stacking.jpg">
+<meta name="twitter:image" content="http://xls1994.github.io/2017/04/30/img/stacking.jpg">
 
 
 
@@ -379,7 +379,7 @@
 <h2 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h2><p>Boosting利用一种迭代的方法，每一次训练的数据都在前一次训练的基础上产生。具体来说就是在每一次训练的时候会更加关心分类错误的样例，给这些分类错误的样例增加更大的权重。然后进行迭代训练，最后将这些分类器进行加权得到最后的分类器。但是boosting方法虽然会比bagging更容易得到好的效果，也会存在过拟合的问题。</p>
 <h2 id="Stacking"><a href="#Stacking" class="headerlink" title="Stacking"></a>Stacking</h2><p>Stacking本质上是一种分层的结构，第一层通常是我们使用的不同基础模型，例如NN、决策树、KNN等。然后最后一层模型一般使用逻辑回归（LR）对这些模型进行进一步训练。</p>
 <p>下图所示的是一个基本的二阶段stacking模型的示例。stacking的时候一般应选择相关性小的模型进行融合，以便让高层次的模型学到更多的信息，提高准确率。</p>
-<p><img src="./stacking.jpg" alt="stacking"></p>
+<p><img src="../img/stacking.jpg" alt="stacking"></p>
 <p>首先，在整个训练集通过五折交叉构造不同的训练集和验证集，第一阶段的每个分类器根据各自4份的训练集进行训练，并用验证集进行验证，将验证集的输出进行保存。将每个分类器的验证集的输出保存，并作为第二阶段分类器的输入。然后在整个训练集上训练第二阶段的分类器。第二阶段分类器的输出为训练集的标签（train_label）</p>
 
       

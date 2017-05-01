@@ -963,7 +963,8 @@
         
           
             <p>tensorflow的数据读取</p>
-<pre><code>tensorflow在读取像imagenet这种大量图像数据，不能一次性load进内存时有几个坑，Mark一记，以助后来者。&lt;!-- more --&gt;
+<pre><code>tensorflow在读取像imagenet这种大量图像数据，不能一次性load进内存时有几个坑，Mark一记，以助后来者。
+&lt;!-- more --&gt;
 关于多GPU和分布式，本文只讨论数据并行方式，即每个GPU上面运行一个网络，称为tower。
 * 数据格式TFRecord
 * 数据读取第一层封装——Queue，Coordinator，QueueRunner
